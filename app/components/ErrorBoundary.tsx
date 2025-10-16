@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { Component, type ReactNode } from 'react';
+import React, { Component, type ReactNode } from "react";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -15,7 +15,10 @@ interface ErrorBoundaryState {
 /**
  * Error boundary component to catch and handle React errors gracefully
  */
-export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export default class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
@@ -27,7 +30,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     // Log error to console in development
-    console.error('Error caught by ErrorBoundary:', error, errorInfo);
+    console.error("Error caught by ErrorBoundary:", error, errorInfo);
   }
 
   render(): ReactNode {
@@ -53,16 +56,17 @@ function DefaultErrorFallback({ error }: { error?: Error }) {
       <div className="max-w-2xl text-center">
         <h1 className="text-5xl font-bold mb-6">Oops! Something went wrong</h1>
         <p className="text-xl mb-8 opacity-80">
-          We encountered an unexpected error. Please refresh the page to try again.
+          We encountered an unexpected error. Please refresh the page to try
+          again.
         </p>
-        {error && process.env.NODE_ENV === 'development' && (
+        {error && process.env.NODE_ENV === "development" && (
           <details className="text-left bg-black/30 p-6 rounded-lg mb-8">
             <summary className="cursor-pointer font-mono text-sm mb-2">
               Error Details (Development Only)
             </summary>
             <pre className="text-xs overflow-auto whitespace-pre-wrap break-words">
               {error.message}
-              {'\n\n'}
+              {"\n\n"}
               {error.stack}
             </pre>
           </details>
@@ -77,4 +81,3 @@ function DefaultErrorFallback({ error }: { error?: Error }) {
     </div>
   );
 }
-

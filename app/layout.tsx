@@ -14,8 +14,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Conceptual Studio | Where Ideas Take Shape",
-  description: "Journey through infinite possibilities with Conceptual Studio. We transform visionary concepts into extraordinary digital experiences that push the boundaries of creativity and innovation.",
-  keywords: ["conceptual studio", "digital agency", "creative studio", "web design", "digital experiences", "innovation", "design agency", "creative services"],
+  description:
+    "Journey through infinite possibilities with Conceptual Studio. We transform visionary concepts into extraordinary digital experiences that push the boundaries of creativity and innovation.",
+  keywords: [
+    "conceptual studio",
+    "digital agency",
+    "creative studio",
+    "web design",
+    "digital experiences",
+    "innovation",
+    "design agency",
+    "creative services",
+  ],
   authors: [{ name: "Conceptual Studio" }],
   creator: "Conceptual Studio",
   publisher: "Conceptual Studio",
@@ -25,13 +35,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://conceptualstudio.com",
     title: "Conceptual Studio | Where Ideas Take Shape",
-    description: "Journey through infinite possibilities with Conceptual Studio. We transform visionary concepts into extraordinary digital experiences.",
+    description:
+      "Journey through infinite possibilities with Conceptual Studio. We transform visionary concepts into extraordinary digital experiences.",
     siteName: "Conceptual Studio",
   },
   twitter: {
     card: "summary_large_image",
     title: "Conceptual Studio | Where Ideas Take Shape",
-    description: "Journey through infinite possibilities with Conceptual Studio. We transform visionary concepts into extraordinary digital experiences.",
+    description:
+      "Journey through infinite possibilities with Conceptual Studio. We transform visionary concepts into extraordinary digital experiences.",
     creator: "@conceptualstudio",
   },
   robots: {

@@ -1,13 +1,18 @@
-'use client';
+"use client";
 
-import { useState, useRef } from 'react';
-import dynamic from 'next/dynamic';
-import Stars from './components/Stars';
-import LoadingScreen from './components/LoadingScreen';
-import { SECTIONS } from './constants';
-import { useScrollProgress, useColorTransition, useScrollToTop, useGsapAnimations } from './hooks';
+import { useState, useRef } from "react";
+import dynamic from "next/dynamic";
+import Stars from "./components/Stars";
+import LoadingScreen from "./components/LoadingScreen";
+import { SECTIONS } from "./constants";
+import {
+  useScrollProgress,
+  useColorTransition,
+  useScrollToTop,
+  useGsapAnimations,
+} from "./hooks";
 
-const AstronautScene = dynamic(() => import('./components/AstronautScene'), {
+const AstronautScene = dynamic(() => import("./components/AstronautScene"), {
   ssr: false,
 });
 
@@ -19,19 +24,27 @@ export default function Home() {
   // Custom hooks for better separation of concerns
   useScrollToTop();
   const scrollProgress = useScrollProgress();
-  const { backgroundColor, textColor } = useColorTransition(SECTIONS, scrollProgress);
+  const { backgroundColor, textColor } = useColorTransition(
+    SECTIONS,
+    scrollProgress,
+  );
   useGsapAnimations(SECTIONS, !isLoading);
 
   return (
     <>
-      {isLoading && <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />}
+      {isLoading && (
+        <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />
+      )}
 
       <div ref={containerRef} className="relative">
         {/* Fixed background with smooth color transitions */}
         <div className="fixed inset-0" style={{ backgroundColor }} />
 
         {/* Animated starfield */}
-        <Stars currentBgColor={backgroundColor} sectionCount={SECTIONS.length} />
+        <Stars
+          currentBgColor={backgroundColor}
+          sectionCount={SECTIONS.length}
+        />
 
         {/* 3D astronaut scene */}
         <AstronautScene scrollProgress={scrollProgress} />
@@ -42,12 +55,14 @@ export default function Home() {
             <section
               key={section.id}
               id={section.id}
-              ref={(el) => (sectionRefs.current[index] = el)}
+              ref={(el) => {
+                sectionRefs.current[index] = el;
+              }}
               className="section-initial flex items-center justify-center"
               style={{
-                height: '100vh',
-                transform: 'translateZ(0)',
-                willChange: 'transform',
+                height: "100vh",
+                transform: "translateZ(0)",
+                willChange: "transform",
               }}
             >
               <div className="max-w-4xl mx-auto text-center px-8 md:px-16">

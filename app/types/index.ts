@@ -25,4 +25,3 @@ export interface AnimationConfig {
   ease: string;
   scrollTrigger?: ScrollTriggerConfig;
 }
-

@@ -1,4 +1,4 @@
-import type { Star } from '../types';
+import type { Star } from "../types";
 
 /**
  * Generates a random array of stars for a single section
@@ -21,8 +21,13 @@ export function generateStarsForSection(starsPerSection = 100): Star[] {
 /**
  * Generates stars for all sections
  */
-export function generateAllStars(sectionCount: number, starsPerSection = 100): Star[][] {
-  return Array.from({ length: sectionCount }, () => generateStarsForSection(starsPerSection));
+export function generateAllStars(
+  sectionCount: number,
+  starsPerSection = 100,
+): Star[][] {
+  return Array.from({ length: sectionCount }, () =>
+    generateStarsForSection(starsPerSection),
+  );
 }
 
 /**
@@ -31,7 +36,7 @@ export function generateAllStars(sectionCount: number, starsPerSection = 100): S
 export function calculateStarStyles(
   star: Star,
   sectionIndex: number,
-  brightnessMultiplier: number
+  brightnessMultiplier: number,
 ): React.CSSProperties {
   const topPosition = sectionIndex * 100 + star.y;
   const opacity = star.opacity * brightnessMultiplier;
@@ -41,9 +46,9 @@ export function calculateStarStyles(
     top: `${topPosition}vh`,
     width: `${star.size}px`,
     height: `${star.size}px`,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     opacity: opacity.toString(),
-    mixBlendMode: 'screen',
+    mixBlendMode: "screen",
   };
 
   // Add glow effect for larger stars
@@ -53,4 +58,3 @@ export function calculateStarStyles(
 
   return styles;
 }
-

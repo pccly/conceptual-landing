@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import type { Star } from '../types';
-import { getBrightnessMultiplier } from '../utils/colors';
-import { generateAllStars, calculateStarStyles } from '../utils/stars';
+import { useEffect, useRef } from "react";
+import type { Star } from "../types";
+import { getBrightnessMultiplier } from "../utils/colors";
+import { generateAllStars, calculateStarStyles } from "../utils/stars";
 
 interface StarsProps {
   currentBgColor: string;
@@ -33,10 +33,10 @@ export default function Stars({ currentBgColor, sectionCount }: StarsProps) {
       renderStars(container, starsRef.current, currentBgColor);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [sectionCount]);
 
@@ -55,7 +55,7 @@ export default function Stars({ currentBgColor, sectionCount }: StarsProps) {
       style={{
         top: 0,
         left: 0,
-        width: '100%',
+        width: "100%",
         height: `${sectionCount * 100}vh`,
         zIndex: 5,
       }}
@@ -69,17 +69,21 @@ export default function Stars({ currentBgColor, sectionCount }: StarsProps) {
 function renderStars(
   container: HTMLDivElement,
   allStars: Star[][],
-  backgroundColor: string
+  backgroundColor: string,
 ): void {
-  container.innerHTML = '';
+  container.innerHTML = "";
   const brightnessMultiplier = getBrightnessMultiplier(backgroundColor);
 
   allStars.forEach((sectionStars, sectionIndex) => {
     sectionStars.forEach((star) => {
-      const starElement = document.createElement('div');
-      starElement.className = 'absolute rounded-full';
+      const starElement = document.createElement("div");
+      starElement.className = "absolute rounded-full";
 
-      const styles = calculateStarStyles(star, sectionIndex, brightnessMultiplier);
+      const styles = calculateStarStyles(
+        star,
+        sectionIndex,
+        brightnessMultiplier,
+      );
       Object.assign(starElement.style, styles);
 
       container.appendChild(starElement);
@@ -93,10 +97,11 @@ function renderStars(
 function updateStarVisibility(
   container: HTMLDivElement,
   allStars: Star[][],
-  backgroundColor: string
+  backgroundColor: string,
 ): void {
   const brightnessMultiplier = getBrightnessMultiplier(backgroundColor);
-  const allStarElements = container.querySelectorAll<HTMLDivElement>('div > div');
+  const allStarElements =
+    container.querySelectorAll<HTMLDivElement>("div > div");
 
   allStarElements.forEach((starElement, index) => {
     const sectionIndex = Math.floor(index / STARS_PER_SECTION);

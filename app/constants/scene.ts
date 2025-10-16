@@ -3,7 +3,7 @@
  */
 export const SCENE_CONFIG = {
   astronaut: {
-    modelPath: '/astronaut.gltf',
+    modelPath: "/astronaut.gltf",
     scale: 0.5,
     startPosition: { x: 2.5, y: 1.5 },
     endPosition: { x: -2.5, y: -2 },
@@ -27,4 +27,3 @@ export const SCENE_CONFIG = {
     point: { position: [0, 5, 5] as [number, number, number], intensity: 1 },
   },
 } as const;
-

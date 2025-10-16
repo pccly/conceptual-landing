@@ -1,4 +1,10 @@
-export default function Logo({ className = "", size = 100 }: { className?: string; size?: number }) {
+export default function Logo({
+  className = "",
+  size = 100,
+}: {
+  className?: string;
+  size?: number;
+}) {
   return (
     <svg
       width={size}

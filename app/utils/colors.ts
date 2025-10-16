@@ -9,7 +9,11 @@ export function parseRgbColor(color: string): number[] {
 /**
  * Interpolates between two RGB colors based on a factor (0-1)
  */
-export function interpolateColor(color1: string, color2: string, factor: number): string {
+export function interpolateColor(
+  color1: string,
+  color2: string,
+  factor: number,
+): string {
   const rgb1 = parseRgbColor(color1);
   const rgb2 = parseRgbColor(color2);
 
@@ -37,4 +41,3 @@ export function getBrightnessMultiplier(backgroundColor: string): number {
   const brightness = calculateBrightness(backgroundColor);
   return Math.max(0.2, 1 - brightness / 255);
 }
-

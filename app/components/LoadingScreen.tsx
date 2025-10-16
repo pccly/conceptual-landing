@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Logo from './Logo';
+import { useEffect, useState } from "react";
+import Logo from "./Logo";
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
@@ -9,7 +9,7 @@ interface LoadingScreenProps {
 
 // Configuration constants
 const LOADING_CONFIG = {
-  backgroundColor: 'rgb(85, 70, 140)',
+  backgroundColor: "rgb(85, 70, 140)",
   starCount: 150,
   progressInterval: 30, // milliseconds
   progressIncrement: 2, // percent per interval
@@ -18,31 +18,31 @@ const LOADING_CONFIG = {
 
 const RING_ANIMATIONS = [
   {
-    duration: '1.2s',
-    easing: 'cubic-bezier(0.4, 0, 0.6, 1)',
-    direction: 'normal',
+    duration: "1.2s",
+    easing: "cubic-bezier(0.4, 0, 0.6, 1)",
+    direction: "normal",
     size: 180, // Outer ring - largest
     strokeWidth: 1.5,
     opacity: 0.15,
-    dashArray: '50 150',
+    dashArray: "50 150",
   },
   {
-    duration: '2s',
-    easing: 'ease-in-out',
-    direction: 'normal',
+    duration: "2s",
+    easing: "ease-in-out",
+    direction: "normal",
     size: 150, // Middle ring
     strokeWidth: 2,
     opacity: 0.2,
-    dashArray: '70 200',
+    dashArray: "70 200",
   },
   {
-    duration: '3s',
-    easing: 'ease-out',
-    direction: 'reverse',
+    duration: "3s",
+    easing: "ease-out",
+    direction: "reverse",
     size: 165, // Between outer and middle
     strokeWidth: 1,
     opacity: 0.1,
-    dashArray: '30 100',
+    dashArray: "30 100",
   },
 ] as const;
 
@@ -55,7 +55,9 @@ interface StarStyle {
   boxShadow: string;
 }
 
-export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
+export default function LoadingScreen({
+  onLoadingComplete,
+}: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [stars, setStars] = useState<StarStyle[]>([]);
@@ -68,10 +70,10 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
 
   // Prevent scrolling while loading
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, []);
 
@@ -97,11 +99,11 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
   return (
     <div
       className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500 overflow-hidden ${
-        isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        isComplete ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
       style={{
         backgroundColor: LOADING_CONFIG.backgroundColor,
-        touchAction: 'none',
+        touchAction: "none",
       }}
     >
       {/* Background Stars */}
@@ -136,7 +138,10 @@ function generateStars(count: number): StarStyle[] {
     width: `${Math.random() * 2.5 + 0.5}px`,
     height: `${Math.random() * 2.5 + 0.5}px`,
     opacity: Math.random() * 0.6 + 0.2,
-    boxShadow: Math.random() > 0.7 ? `0 0 ${Math.random() * 4 + 2}px rgba(255, 255, 255, 0.5)` : 'none',
+    boxShadow:
+      Math.random() > 0.7
+        ? `0 0 ${Math.random() * 4 + 2}px rgba(255, 255, 255, 0.5)`
+        : "none",
   }));
 }
 
@@ -179,9 +184,9 @@ function RotatingRing({
   strokeWidth,
   opacity,
   dashArray,
-}: typeof RING_ANIMATIONS[number]) {
+}: (typeof RING_ANIMATIONS)[number]) {
   return (
-    <div 
+    <div
       className="absolute top-1/2 left-1/2"
       style={{
         width: `${size}px`,
@@ -193,7 +198,7 @@ function RotatingRing({
       <svg
         className="w-full h-full"
         style={{
-          animation: `spin ${duration} ${easing} infinite ${direction === 'reverse' ? 'reverse' : ''}`,
+          animation: `spin ${duration} ${easing} infinite ${direction === "reverse" ? "reverse" : ""}`,
         }}
         viewBox="0 0 100 100"
       >

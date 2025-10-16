@@ -1,18 +1,22 @@
-import type { Section } from '../types';
+import type { Section } from "../types";
 
 /**
  * Calculates the current scroll progress as a value between 0 and 1
  */
 export function calculateScrollProgress(): number {
   const scrollTop = window.scrollY;
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
   return scrollHeight > 0 ? scrollTop / scrollHeight : 0;
 }
 
 /**
  * Calculates which section the user is currently viewing
  */
-export function getCurrentSectionIndex(progress: number, totalSections: number): number {
+export function getCurrentSectionIndex(
+  progress: number,
+  totalSections: number,
+): number {
   const sectionProgress = progress * totalSections;
   return Math.floor(sectionProgress);
 }
@@ -20,7 +24,10 @@ export function getCurrentSectionIndex(progress: number, totalSections: number):
 /**
  * Calculates the transition progress within the current section (0-1)
  */
-export function getSectionTransitionProgress(progress: number, totalSections: number): number {
+export function getSectionTransitionProgress(
+  progress: number,
+  totalSections: number,
+): number {
   const sectionProgress = progress * totalSections;
   const currentSectionIndex = Math.floor(sectionProgress);
   return sectionProgress - currentSectionIndex;
@@ -31,23 +38,38 @@ export function getSectionTransitionProgress(progress: number, totalSections: nu
  */
 export function getInterpolatedColors(
   sections: Section[],
-  scrollProgress: number
+  scrollProgress: number,
 ): { backgroundColor: string; textColor: string } {
   const totalSections = sections.length;
   const currentIndex = getCurrentSectionIndex(scrollProgress, totalSections);
   const nextIndex = Math.min(currentIndex + 1, totalSections - 1);
-  const transitionProgress = getSectionTransitionProgress(scrollProgress, totalSections);
+  const transitionProgress = getSectionTransitionProgress(
+    scrollProgress,
+    totalSections,
+  );
 
   const currentSection = sections[Math.min(currentIndex, totalSections - 1)];
   const nextSection = sections[nextIndex];
 
   return {
-    backgroundColor: interpolateColor(currentSection.color, nextSection.color, transitionProgress),
-    textColor: interpolateColor(currentSection.textColor, nextSection.textColor, transitionProgress),
+    backgroundColor: interpolateColor(
+      currentSection.color,
+      nextSection.color,
+      transitionProgress,
+    ),
+    textColor: interpolateColor(
+      currentSection.textColor,
+      nextSection.textColor,
+      transitionProgress,
+    ),
   };
 }
 
-function interpolateColor(color1: string, color2: string, factor: number): string {
+function interpolateColor(
+  color1: string,
+  color2: string,
+  factor: number,
+): string {
   const rgb1 = color1.match(/\d+/g)?.map(Number) || [0, 0, 0];
   const rgb2 = color2.match(/\d+/g)?.map(Number) || [0, 0, 0];
 
@@ -57,4 +79,3 @@ function interpolateColor(color1: string, color2: string, factor: number): strin
 
   return `rgb(${r}, ${g}, ${b})`;
 }
-

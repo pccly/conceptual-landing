@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import type { Section } from '../types';
-import { getInterpolatedColors } from '../utils/scroll';
+import { useEffect, useState } from "react";
+import type { Section } from "../types";
+import { getInterpolatedColors } from "../utils/scroll";
 
 interface ColorState {
   backgroundColor: string;
@@ -10,10 +10,13 @@ interface ColorState {
 /**
  * Custom hook to manage smooth color transitions based on scroll progress
  */
-export function useColorTransition(sections: Section[], scrollProgress: number): ColorState {
+export function useColorTransition(
+  sections: Section[],
+  scrollProgress: number,
+): ColorState {
   const [colors, setColors] = useState<ColorState>({
-    backgroundColor: sections[0]?.color || 'rgb(0, 0, 0)',
-    textColor: sections[0]?.textColor || 'rgb(255, 255, 255)',
+    backgroundColor: sections[0]?.color || "rgb(0, 0, 0)",
+    textColor: sections[0]?.textColor || "rgb(255, 255, 255)",
   });
 
   useEffect(() => {
@@ -25,4 +28,3 @@ export function useColorTransition(sections: Section[], scrollProgress: number):
 
   return colors;
 }
-

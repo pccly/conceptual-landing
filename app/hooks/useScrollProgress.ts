@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { calculateScrollProgress } from '../utils/scroll';
+import { useEffect, useState } from "react";
+import { calculateScrollProgress } from "../utils/scroll";
 
 /**
  * Custom hook to track scroll progress (0-1)
@@ -13,12 +13,11 @@ export function useScrollProgress(): number {
       setScrollProgress(progress);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Initial call
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return scrollProgress;
 }
-

@@ -1,15 +1,22 @@
-import { useEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import type { Section } from '../types';
-import { ANIMATION_CONFIG, ANIMATION_FROM, ANIMATION_TO } from '../constants/animations';
+import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { Section } from "../types";
+import {
+  ANIMATION_CONFIG,
+  ANIMATION_FROM,
+  ANIMATION_TO,
+} from "../constants/animations";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Custom hook to set up GSAP animations for all sections
  */
-export function useGsapAnimations(sections: Section[], isLoadingComplete: boolean): void {
+export function useGsapAnimations(
+  sections: Section[],
+  isLoadingComplete: boolean,
+): void {
   useEffect(() => {
     if (!isLoadingComplete) return;
 
@@ -109,4 +116,3 @@ function animateScrollSection(selector: string): void {
     },
   });
 }
-
