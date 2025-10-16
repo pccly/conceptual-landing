@@ -22,9 +22,12 @@ export function useColorTransition(
   useEffect(() => {
     if (sections.length === 0) return;
 
-    const interpolatedColors = getInterpolatedColors(sections, scrollProgress);
+    // Ensure scrollProgress is valid and clamped between 0 and 1
+    const validProgress = Math.max(0, Math.min(1, scrollProgress));
+    const interpolatedColors = getInterpolatedColors(sections, validProgress);
     setColors(interpolatedColors);
   }, [scrollProgress, sections]);
 
   return colors;
 }
+

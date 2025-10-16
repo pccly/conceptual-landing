@@ -58,3 +58,4 @@ export function calculateStarStyles(
 
   return styles;
 }
+

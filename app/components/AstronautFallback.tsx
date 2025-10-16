@@ -28,24 +28,25 @@ export default function AstronautFallback({
     const xEnd = 50 + endPosition.x * 10;
     const yEnd = 50 - endPosition.y * 10;
 
-    const x = xStart + (xEnd - xStart) * scrollProgress;
-    const y = yStart + (yEnd - yStart) * scrollProgress;
+    const targetX = xStart + (xEnd - xStart) * scrollProgress;
+    const targetY = yStart + (yEnd - yStart) * scrollProgress;
 
-    // Apply transform with smooth animation
-    astronautRef.current.style.transform = `translate(-50%, -50%) translate(${x}vw, ${y}vh)`;
+    // Apply transform with smooth CSS transition
+    astronautRef.current.style.transform = `translate(-50%, -50%) translate(${targetX}vw, ${targetY}vh)`;
   }, [scrollProgress]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
       <div
         ref={astronautRef}
-        className="absolute top-0 left-0 transition-transform duration-100 ease-out"
+        className="absolute top-0 left-0 transition-transform duration-300 ease-out"
         style={{
           transform: "translate(-50%, -50%)",
+          willChange: "transform",
         }}
       >
         {/* CSS-based astronaut illustration */}
-        <div className="relative astronaut-fallback">
+        <div className="relative astronaut-float">
           {/* Helmet */}
           <div className="absolute w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-300 rounded-full border-4 border-white shadow-2xl">
             {/* Visor */}
@@ -78,28 +79,7 @@ export default function AstronautFallback({
           {/* Right Leg */}
           <div className="absolute top-44 left-14 w-8 h-16 bg-gradient-to-br from-gray-200 to-gray-400 rounded-full border-2 border-white shadow-lg" />
 
-          {/* Floating animation */}
-          <style jsx>{`
-            .astronaut-fallback {
-              animation: float 6s ease-in-out infinite;
-            }
-
-            @keyframes float {
-              0%,
-              100% {
-                transform: translateY(0) rotate(0deg);
-              }
-              25% {
-                transform: translateY(-10px) rotate(2deg);
-              }
-              50% {
-                transform: translateY(0) rotate(0deg);
-              }
-              75% {
-                transform: translateY(-10px) rotate(-2deg);
-              }
-            }
-          `}</style>
+          {/* Floating animation - using CSS classes instead of styled-jsx */}
         </div>
       </div>
     </div>

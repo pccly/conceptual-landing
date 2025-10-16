@@ -41,3 +41,4 @@ export function getBrightnessMultiplier(backgroundColor: string): number {
   const brightness = calculateBrightness(backgroundColor);
   return Math.max(0.2, 1 - brightness / 255);
 }
+

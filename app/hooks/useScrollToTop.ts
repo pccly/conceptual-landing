@@ -9,3 +9,4 @@ export function useScrollToTop(): void {
     window.scrollTo(0, 0);
   }, []);
 }
+

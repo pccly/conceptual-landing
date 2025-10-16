@@ -49,19 +49,22 @@ function Astronaut({ scrollProgress }: AstronautProps) {
   }, [scene]);
 
   // Animate based on scroll and time
-  useFrame(() => {
+  useFrame((state) => {
     if (!groupRef.current) return;
 
     const { startPosition, endPosition, rotation } = SCENE_CONFIG.astronaut;
 
-    // Scroll-based position: diagonal movement from top-right to bottom-left
-    groupRef.current.position.x =
-      startPosition.x + (endPosition.x - startPosition.x) * scrollProgress;
-    groupRef.current.position.y =
-      startPosition.y + (endPosition.y - startPosition.y) * scrollProgress;
+    // Smooth scroll-based position with easing to prevent flickering
+    const targetX = startPosition.x + (endPosition.x - startPosition.x) * scrollProgress;
+    const targetY = startPosition.y + (endPosition.y - startPosition.y) * scrollProgress;
+    
+    // Smooth interpolation to prevent flickering at boundaries
+    const lerpFactor = 0.2; // Increased for better responsiveness while maintaining smoothness
+    groupRef.current.position.x += (targetX - groupRef.current.position.x) * lerpFactor;
+    groupRef.current.position.y += (targetY - groupRef.current.position.y) * lerpFactor;
 
-    // Time-based rotation for floating effect
-    const time = Date.now();
+    // Time-based rotation for floating effect using frame clock
+    const time = state.clock.getElapsedTime() * 1000; // Convert to milliseconds
     groupRef.current.rotation.y += rotation.ySpeed;
     groupRef.current.rotation.x =
       Math.sin(time * rotation.xFrequency) * rotation.xAmplitude;
@@ -98,17 +101,15 @@ export default function AstronautScene({ scrollProgress }: AstronautProps) {
     setWebglSupported(supported);
     if (!supported && reason) {
       setErrorMessage(reason);
-      console.warn(`WebGL not supported: ${reason}. Using CSS fallback.`);
+      console.info(`WebGL not available (${reason}). Using optimized CSS animation instead.`);
+    } else if (supported) {
+      console.info("WebGL detected. 3D scene enabled.");
     }
   }, []);
 
-  // Show nothing during detection to avoid flash
-  if (webglSupported === null) {
-    return null;
-  }
-
-  // Use CSS fallback if WebGL is not supported
-  if (!webglSupported) {
+  // Always render the CSS fallback initially to prevent hydration mismatch
+  // The WebGL scene will be rendered once WebGL support is confirmed
+  if (webglSupported === null || !webglSupported) {
     return <AstronautFallback scrollProgress={scrollProgress} />;
   }
 
@@ -120,8 +121,14 @@ export default function AstronautScene({ scrollProgress }: AstronautProps) {
           // Additional runtime check for context loss
           gl.domElement.addEventListener("webglcontextlost", (event) => {
             event.preventDefault();
-            console.error("WebGL context lost. Falling back to CSS.");
+            console.warn("WebGL context lost. Gracefully falling back to CSS animation.");
             setWebglSupported(false);
+          });
+          
+          // Handle context restoration
+          gl.domElement.addEventListener("webglcontextrestored", () => {
+            console.info("WebGL context restored. Re-enabling 3D scene.");
+            setWebglSupported(true);
           });
         }}
       >

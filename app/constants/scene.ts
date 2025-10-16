@@ -27,3 +27,4 @@ export const SCENE_CONFIG = {
     point: { position: [0, 5, 5] as [number, number, number], intensity: 1 },
   },
 } as const;
+
