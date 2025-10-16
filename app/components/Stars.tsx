@@ -11,6 +11,7 @@ interface StarsProps {
 }
 
 const STARS_PER_SECTION = 100;
+const TWINKLE_PERCENTAGE = 0.3; // 30% of stars will twinkle
 
 export default function Stars({ currentBgColor, sectionCount }: StarsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -86,9 +87,36 @@ function renderStars(
       );
       Object.assign(starElement.style, styles);
 
+      // Add twinkling animation to a percentage of stars
+      if (Math.random() < TWINKLE_PERCENTAGE) {
+        addTwinkleAnimation(starElement, star);
+      }
+
       container.appendChild(starElement);
     });
   });
+}
+
+/**
+ * Adds a twinkling/pulsing light effect to a star element
+ */
+function addTwinkleAnimation(starElement: HTMLDivElement, star: Star): void {
+  // Random duration between 2-5 seconds
+  const duration = 2 + Math.random() * 3;
+  // Random delay to stagger the animations
+  const delay = Math.random() * 5;
+  
+  // Store the base opacity as a CSS variable for the animation
+  const currentOpacity = starElement.style.opacity || star.opacity.toString();
+  starElement.style.setProperty('--star-opacity', currentOpacity);
+  
+  starElement.style.animation = `twinkle ${duration}s ease-in-out ${delay}s infinite`;
+  
+  // For larger stars, also animate the glow
+  if (star.size > 1.5) {
+    starElement.style.setProperty('--star-glow-size', `${star.size * 2}px`);
+    starElement.style.setProperty('--star-glow-spread', `${star.size * 0.5}px`);
+  }
 }
 
 /**

@@ -42,6 +42,17 @@ html {
   }
 }
 
+@keyframes twinkle {
+  0%, 100% {
+    opacity: var(--star-opacity);
+    box-shadow: 0 0 var(--star-glow-size, 0px) var(--star-glow-spread, 0px) rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    opacity: calc(var(--star-opacity) * 2);
+    box-shadow: 0 0 calc(var(--star-glow-size, 0px) * 2) calc(var(--star-glow-spread, 0px) * 2) rgba(255, 255, 255, 0.8);
+  }
+}
+
 /* Initial hidden states for GSAP animations */
 .section-initial {
   opacity: 0;
