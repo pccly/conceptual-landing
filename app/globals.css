@@ -23,4 +23,38 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Initial hidden states for GSAP animations */
+.section-initial {
+  opacity: 0;
+}
+
+.title-initial {
+  opacity: 0;
+}
+
+.description-initial {
+  opacity: 0;
+}
+
+.counter-initial {
+  opacity: 0;
 }

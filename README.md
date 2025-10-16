@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Conceptual Landing
+
+A modern, interactive landing page featuring a 3D astronaut scene with scroll-based animations and dynamic color transitions.
+
+## Features
+
+- **3D Astronaut Scene** - Interactive 3D astronaut model rendered with Three.js and React Three Fiber
+- **Scroll-Based Animations** - Smooth GSAP animations triggered by scroll progress
+- **Dynamic Color Transitions** - Background colors transition smoothly as you scroll through sections
+- **Responsive Design** - Optimized for all screen sizes with Tailwind CSS
+- **Performance Optimized** - Built with Next.js 15 and React 19 for optimal performance
+
+## Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org) with App Router and Turbopack
+- **UI**: [React 19](https://react.dev) with TypeScript
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com)
+- **3D Graphics**: [Three.js](https://threejs.org), [React Three Fiber](https://docs.pmnd.rs/react-three-fiber), [@react-three/drei](https://github.com/pmndrs/drei)
+- **Animations**: [GSAP](https://gsap.com)
+- **Code Quality**: [Biome](https://biomejs.dev) for linting and formatting
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20 or higher
+- npm (included with Node.js)
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install dependencies
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Start the development server
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) to view the application in your browser.
 
-## Learn More
+### Build
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Create a production build
+npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Start the production server
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Code Quality
 
-## Deploy on Vercel
+```bash
+# Check code with Biome
+npm run lint
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Format code with Biome
+npm run format
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+conceptual-landing/
+├── app/
+│   ├── components/        # React components
+│   │   ├── AstronautScene.tsx
+│   │   ├── ErrorBoundary.tsx
+│   │   ├── LoadingScreen.tsx
+│   │   ├── Logo.tsx
+│   │   └── Stars.tsx
+│   ├── constants/         # Configuration constants
+│   │   ├── animations.ts
+│   │   ├── scene.ts
+│   │   └── sections.ts
+│   ├── hooks/            # Custom React hooks
+│   │   ├── useColorTransition.ts
+│   │   ├── useGsapAnimations.ts
+│   │   ├── useScrollProgress.ts
+│   │   └── useScrollToTop.ts
+│   ├── types/            # TypeScript type definitions
+│   ├── utils/            # Utility functions
+│   │   ├── colors.ts
+│   │   ├── scroll.ts
+│   │   └── stars.ts
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── public/               # Static assets
+│   ├── astronaut.gltf   # 3D astronaut model
+│   └── scene.bin        # Binary data for 3D model
+└── ...config files
+```
+
+## Key Components
+
+- **AstronautScene**: Renders the 3D astronaut with lighting and camera controls
+- **Stars**: Creates an animated starfield background
+- **LoadingScreen**: Displays while 3D assets are loading
+- **ErrorBoundary**: Gracefully handles rendering errors
+
+## Custom Hooks
+
+- **useScrollProgress**: Tracks scroll position and progress through sections
+- **useGsapAnimations**: Manages GSAP-based scroll animations
+- **useColorTransition**: Handles smooth background color transitions
+- **useScrollToTop**: Provides smooth scroll to top functionality
+
+## License
+
+This project is private and not licensed for public use.

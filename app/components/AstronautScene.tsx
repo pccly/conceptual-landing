@@ -1,0 +1,94 @@
+'use client';
+
+import { useRef, useEffect, Suspense } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useGLTF, PerspectiveCamera } from '@react-three/drei';
+import * as THREE from 'three';
+import { SCENE_CONFIG } from '../constants/scene';
+
+// Preload the model for better performance
+useGLTF.preload(SCENE_CONFIG.astronaut.modelPath);
+
+interface AstronautProps {
+  scrollProgress: number;
+}
+
+function Astronaut({ scrollProgress }: AstronautProps) {
+  const groupRef = useRef<THREE.Group>(null);
+  const { scene } = useGLTF(SCENE_CONFIG.astronaut.modelPath);
+
+  // Ensure materials render correctly
+  useEffect(() => {
+    if (scene) {
+      scene.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          if (mesh.material) {
+            mesh.material.needsUpdate = true;
+          }
+        }
+      });
+    }
+  }, [scene]);
+
+  // Animate based on scroll and time
+  useFrame(() => {
+    if (!groupRef.current) return;
+
+    const { startPosition, endPosition, rotation } = SCENE_CONFIG.astronaut;
+
+    // Scroll-based position: diagonal movement from top-right to bottom-left
+    groupRef.current.position.x = startPosition.x + (endPosition.x - startPosition.x) * scrollProgress;
+    groupRef.current.position.y = startPosition.y + (endPosition.y - startPosition.y) * scrollProgress;
+
+    // Time-based rotation for floating effect
+    const time = Date.now();
+    groupRef.current.rotation.y += rotation.ySpeed;
+    groupRef.current.rotation.x = Math.sin(time * rotation.xFrequency) * rotation.xAmplitude;
+    groupRef.current.rotation.z = Math.cos(time * rotation.zFrequency) * rotation.zAmplitude;
+  });
+
+  return (
+    <group ref={groupRef}>
+      <primitive object={scene} scale={SCENE_CONFIG.astronaut.scale} />
+    </group>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <mesh>
+      <sphereGeometry args={[0.5, 32, 32]} />
+      <meshStandardMaterial color="#ffffff" metalness={0.8} roughness={0.2} />
+    </mesh>
+  );
+}
+
+export default function AstronautScene({ scrollProgress }: AstronautProps) {
+  return (
+    <div className="fixed inset-0 pointer-events-none z-10">
+      <Canvas>
+        <PerspectiveCamera makeDefault position={SCENE_CONFIG.camera.position} />
+        
+        {/* Lighting setup */}
+        <ambientLight intensity={SCENE_CONFIG.lighting.ambient.intensity} />
+        {SCENE_CONFIG.lighting.directional.map((light, index) => (
+          <directionalLight
+            key={`directional-${index}`}
+            position={light.position}
+            intensity={light.intensity}
+          />
+        ))}
+        <pointLight
+          position={SCENE_CONFIG.lighting.point.position}
+          intensity={SCENE_CONFIG.lighting.point.intensity}
+        />
+        
+        {/* Astronaut model with fallback */}
+        <Suspense fallback={<LoadingFallback />}>
+          <Astronaut scrollProgress={scrollProgress} />
+        </Suspense>
+      </Canvas>
+    </div>
+  );
+}
