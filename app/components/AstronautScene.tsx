@@ -17,7 +17,7 @@ function Astronaut({ scrollProgress }: AstronautProps) {
   const groupRef = useRef<THREE.Group>(null);
   const { scene } = useGLTF(SCENE_CONFIG.astronaut.modelPath);
 
-  // Ensure materials render correctly
+  // Ensure materials render correctly and set initial position
   useEffect(() => {
     if (scene) {
       scene.traverse((child) => {
@@ -35,6 +35,14 @@ function Astronaut({ scrollProgress }: AstronautProps) {
           }
         }
       });
+    }
+    
+    // Set initial position immediately when model loads
+    if (groupRef.current) {
+      const { startPosition } = SCENE_CONFIG.astronaut;
+      groupRef.current.position.x = startPosition.x;
+      groupRef.current.position.y = startPosition.y;
+      groupRef.current.position.z = 0;
     }
   }, [scene]);
 
@@ -60,7 +68,10 @@ function Astronaut({ scrollProgress }: AstronautProps) {
   });
 
   return (
-    <group ref={groupRef}>
+    <group 
+      ref={groupRef}
+      position={[SCENE_CONFIG.astronaut.startPosition.x, SCENE_CONFIG.astronaut.startPosition.y, 0]}
+    >
       <primitive object={scene} scale={SCENE_CONFIG.astronaut.scale} />
     </group>
   );
