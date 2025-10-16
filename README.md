@@ -24,20 +24,20 @@ A modern, interactive landing page featuring a 3D astronaut scene with scroll-ba
 ### Prerequisites
 
 - Node.js 20 or higher
-- npm (included with Node.js)
+- pnpm (install with `npm install -g pnpm` or `brew install pnpm`)
 
 ### Installation
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 ```
 
 ### Development
 
 ```bash
 # Start the development server
-npm run dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application in your browser.
@@ -46,20 +46,20 @@ Open [http://localhost:3000](http://localhost:3000) to view the application in y
 
 ```bash
 # Create a production build
-npm run build
+pnpm build
 
 # Start the production server
-npm start
+pnpm start
 ```
 
 ### Code Quality
 
 ```bash
 # Check code with Biome
-npm run lint
+pnpm lint
 
 # Format code with Biome
-npm run format
+pnpm format
 ```
 
 ## Project Structure
