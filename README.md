@@ -5,8 +5,10 @@ A modern, interactive landing page featuring a 3D astronaut scene with scroll-ba
 ## Features
 
 - **3D Astronaut Scene** - Interactive 3D astronaut model rendered with Three.js and React Three Fiber
+- **GPU Fallback Support** - Automatic detection of WebGL/GPU availability with graceful CSS-based fallback
 - **Scroll-Based Animations** - Smooth GSAP animations triggered by scroll progress
 - **Dynamic Color Transitions** - Background colors transition smoothly as you scroll through sections
+- **Twinkling Stars** - Animated starfield background with periodic light effects
 - **Responsive Design** - Optimized for all screen sizes with Tailwind CSS
 - **Performance Optimized** - Built with Next.js 15 and React 19 for optimal performance
 
@@ -98,10 +100,24 @@ conceptual-landing/
 
 ## Key Components
 
-- **AstronautScene**: Renders the 3D astronaut with lighting and camera controls
-- **Stars**: Creates an animated starfield background
+- **AstronautScene**: Renders the 3D astronaut with lighting and camera controls, includes WebGL detection
+- **AstronautFallback**: CSS-based fallback astronaut for browsers without GPU acceleration
+- **Stars**: Creates an animated starfield background with twinkling light effects
 - **LoadingScreen**: Displays while 3D assets are loading
 - **ErrorBoundary**: Gracefully handles rendering errors
+
+## Browser Compatibility
+
+The application automatically detects WebGL and GPU acceleration support:
+
+- **WebGL Available**: Full 3D astronaut scene with Three.js rendering
+- **No GPU Acceleration**: Graceful fallback to CSS-based animated astronaut
+- **Context Loss Handling**: Automatic fallback if GPU context is lost during runtime
+
+The detection checks for:
+- WebGL availability
+- Hardware vs. software rendering
+- GPU context loss events
 
 ## Custom Hooks
 

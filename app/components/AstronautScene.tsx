@@ -1,10 +1,12 @@
 "use client";
 
-import { useRef, useEffect, Suspense } from "react";
+import { useRef, useEffect, Suspense, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, PerspectiveCamera } from "@react-three/drei";
 import * as THREE from "three";
 import { SCENE_CONFIG } from "../constants/scene";
+import { detectWebGLSupport } from "../utils/webgl";
+import AstronautFallback from "./AstronautFallback";
 
 // Preload the model for better performance
 useGLTF.preload(SCENE_CONFIG.astronaut.modelPath);
@@ -87,9 +89,42 @@ function LoadingFallback() {
 }
 
 export default function AstronautScene({ scrollProgress }: AstronautProps) {
+  const [webglSupported, setWebglSupported] = useState<boolean | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Detect WebGL support on mount
+    const { supported, reason } = detectWebGLSupport();
+    setWebglSupported(supported);
+    if (!supported && reason) {
+      setErrorMessage(reason);
+      console.warn(`WebGL not supported: ${reason}. Using CSS fallback.`);
+    }
+  }, []);
+
+  // Show nothing during detection to avoid flash
+  if (webglSupported === null) {
+    return null;
+  }
+
+  // Use CSS fallback if WebGL is not supported
+  if (!webglSupported) {
+    return <AstronautFallback scrollProgress={scrollProgress} />;
+  }
+
+  // Render WebGL scene
   return (
     <div className="fixed inset-0 pointer-events-none z-10">
-      <Canvas>
+      <Canvas
+        onCreated={({ gl }) => {
+          // Additional runtime check for context loss
+          gl.domElement.addEventListener("webglcontextlost", (event) => {
+            event.preventDefault();
+            console.error("WebGL context lost. Falling back to CSS.");
+            setWebglSupported(false);
+          });
+        }}
+      >
         <PerspectiveCamera
           makeDefault
           position={SCENE_CONFIG.camera.position}

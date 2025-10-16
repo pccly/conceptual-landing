@@ -4,3 +4,4 @@
 export * from "./colors";
 export * from "./scroll";
 export * from "./stars";
+export * from "./webgl";
